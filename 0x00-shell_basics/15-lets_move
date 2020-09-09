@@ -1,9 +1,2 @@
-ntu@ip-172-31-63-244:/tmp/sym$ ./15-lets_move
-ubuntu@ip-172-31-63-244:/tmp/sym$ ls -la
-total 148
-drwxrwxr-x  3 ubuntu ubuntu   4096 Sep 20 03:33 .
-drwxrwxrwt 12 root   root   139264 Sep 20 03:26 ..
-lrwxrwxrwx  1 ubuntu ubuntu      7 Sep 20 03:24 __ls__ -> /bin/ls
--rw-rw-r--  1 ubuntu ubuntu      0 Sep 20 03:32 random_file
-ubuntu@ip-172-31-63-244:/tmp/sym$ ls -la /tmp/u
-total 8
+#!/bin/bash
+mv[[:upper:]]* /tmp/u/
