@@ -1,6 +1,2 @@
-n@ubuntu:/var$ pwd
-/var
-julien@ubuntu:/var$ source ./10-back
-/tmp
-julien@ubuntu:/tmp$ pwd
-/tmp
+#!/bin/bash
+cd -
