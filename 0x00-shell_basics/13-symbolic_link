@@ -1,5 +1,2 @@
-total 144
-drwxrwxr-x  2 ubuntu ubuntu   4096 Sep 20 03:24 .
-drwxrwxrwt 12 root   root   139264 Sep 20 03:24 ..
-ubuntu@ip-172-31-63-244:/tmp/sym$./13-symbolic_link
-ubuntu@ip-172-31-63-244:/tmp/sym$ ls -la
+#!/bin/bash
+ln -s /bin/ls __ls__
