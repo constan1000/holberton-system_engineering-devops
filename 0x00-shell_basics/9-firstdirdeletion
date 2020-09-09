@@ -1,3 +1,2 @@
-berton
-/tmp/holberton: cannot open `/tmp/holberton' (No such file or directory)
-$
+#!/bin/bash
+rm -d /tmp/holberton
