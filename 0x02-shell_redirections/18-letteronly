@@ -1,1 +1,2 @@
 #!/bin/bash
+greo "^[[:alpha:]]" /etc/ssh/sshd_config
