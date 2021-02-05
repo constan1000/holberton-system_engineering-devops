@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# FizzBuzz - print 1 to 100, "Fizz" for multiples of 3,
-# "Buzz" for multiples of 5, and "FizzBuzz" for multiples of 3 and 5
-
-for (( i=1; i < 101; i++ ))
+#script that displays numbers from 1 to 100.
+for counter in {1..100}
 do
-    if (( i % 15 == 0 )); then
-	echo "FizzBuzz"
-    elif (( i % 3 == 0 )); then
-	echo "Fizz"
-    elif (( i % 5 == 0 )); then
-	echo "Buzz"
-    else
-	echo "$i"
-    fi
+	if [ $((counter % 15)) == 0 ] 
+	then
+		echo "FizzBuzz"
+	elif [ $((counter % 3)) == 0 ]
+	then
+		echo "Fizz"
+	elif [ $((counter % 5)) == 0 ]
+	then 
+		echo "Buzz"
+	else
+		echo $counter
+	fi
+	((counter++))
 done
