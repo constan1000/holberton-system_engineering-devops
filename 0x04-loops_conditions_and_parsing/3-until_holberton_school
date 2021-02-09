@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-#script that displays Holberton School 10 times.
-counter=1
-until [ $counter -ge 11 ]
+# This script is displaying "Holberton School" 10 times with until loop
+counter=0
+until [ $counter -eq 10 ];
 do
-	echo "Holberton School"
+	echo Holberton School
 	((counter++))
 done

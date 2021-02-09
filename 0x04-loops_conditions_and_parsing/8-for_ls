@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#script that displays The content of the current directory
-list="$(ls)"
-for counter in $list; 
+#display just the name of the files
+LS=$(ls .)
+for i in $LS
 do
-    echo "$counter" | cut -d'-' -f 2
+	echo "$i" | cut -d- -f2
 done

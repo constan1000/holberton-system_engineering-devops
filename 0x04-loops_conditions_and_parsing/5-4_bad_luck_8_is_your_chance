@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# script that loops from 1 to 10 and:
-counter=1
-while [ $counter -le 10 ]
+# 8 is good 4 is bad that's what i check
+i=1
+while [ $i -le 10 ];
 do
-	if [ $counter -eq 4 ]
+	if [ $i -eq 4 ]
 	then
-		echo "bad luck"
-	elif [ $counter -eq 8 ]
+		echo bad luck
+	elif [ $i -eq 8 ]
 	then
-		echo "good luck"
+		echo good luck
 	else
-		echo "Holberton School"
+		echo Holberton School
 	fi
-	((counter++))
+	((i++))
 done

@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-#script that displays Holberton School 10 times, but for the 9th iteration, displays Holberton School and then Hi on a new line.
-counter=1
-while [ $counter -le 10 ]
+# print Holberton school 10 times and if it's 9 say hi
+i=0
+while [ $i -lt 10 ];
 do
-
-	echo "Holberton School"
-	if [ $counter -eq 9 ]
+	echo Holberton School
+	if [ $i -eq 8 ]
 	then
-		echo "Hi"
+		echo Hi
 	fi
-	((counter++))
+	((i++))
 done

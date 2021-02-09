@@ -1,19 +1,31 @@
 #!/usr/bin/env bash
-#displays numbers from 1 to 20
-counter=1
-while [[ $counter -le 20 ]]
+# displays the bad luck in the countries around the world
+i=1
+while [ $i -le 20 ];
 do
-	echo $counter
-	case $counter in
+	case $i in
 		4)
-			echo "bad luck from China"
+			echo $i
+			echo bad luck from China
+			((i++))
 			;;
+
 		9)
-			echo "bad luck from Japan"
+			echo $i
+			echo bad luck from Japan
+			((i++))
 			;;
+
 		17)
-			echo "bad luck from Italy"
+			echo $i
+			echo bad luck from Italy
+			((i++))
+			;;
+
+		*)
+			echo $i
+			((i++))
 			;;
 	esac
-	((counter++))
+
 done
