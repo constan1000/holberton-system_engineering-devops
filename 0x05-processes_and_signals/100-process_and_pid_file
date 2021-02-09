@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# advanced task 
+FILE=holbertonscript.pid
+echo $$ > $FILE
+sudo mv $FILE /var/run/
+
+while true
+do
+    echo "To infinity and beyond"
+    trap "echo I hate the kill command; sudo rm /var/run/holbertonscript.pid; exit" SIGTERM
+	trap "sudo rm /var/run/holbertonscript.pid; exit" SIGQUIT
+    trap "echo Y U no love me?!" SIGINT
+	sleep 2
+done
