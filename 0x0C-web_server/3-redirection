@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Installs Nginx and config
+
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+sudo sed -i "/listen 80 default_server;/a rewrite ^/redirect_me https://google.com permanent;" /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
