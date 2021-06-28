@@ -1,10 +1,12 @@
-# Set the Nginx ULIMIT to a higher value
+# fix request limit at nginx
 
-exec { 'replace ULIMIT':
-    path    => '/usr/bin',
-    command => 'sudo sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 262144\"/g" /etc/default/nginx',
+exec { 'fix--for-nginx':
+  command => 'sed -i "s/15/4096/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/'
 }
--> exec { 'restart NGINX':
-    path    => '/usr/bin',
-    command => 'service nginx restart',
+
+# Restart Nginx
+-> exec { 'nginx-restart':
+  command => 'nginx restart',
+  path    => '/etc/init.d/'
 }
