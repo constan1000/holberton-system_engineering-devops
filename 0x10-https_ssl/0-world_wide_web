@@ -1,25 +1,14 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2086
-# Bash script that will display information about subdomains.
-
-excute () {
-        RECORD_TYPE=$(dig "$2"."$1" | awk 'BEGIN{OFS=" ";} /^'$2'/{print $4}')
-        DESTINATION=$(dig "$2"."$1" | awk 'BEGIN{OFS=" ";} /^'$2'/{print $5}')
-        echo "The subdomain $2 is a $RECORD_TYPE record and points to $DESTINATION"
-}
-domain=$1
-subdomain=$2
-sub=( www lb-01 web-01 web-02 )
-check () {
-    if [[ $subdomain == "" ]]
-    then
-        for x in "${sub[@]}"
-        do
-            excute "$domain" "$x"
-        done
-    else
-        excute "$domain" "$subdomain"
-    fi
-    return 0
-}
-check
+# The verification of the subdomains
+subdomain='www lb-01 web-01 web-02'
+if [ $# -eq 1 ]
+then
+	for i in $subdomain
+	do echo -n "The subdomain $i"
+	dig "$i.$1" | grep -A 1 'ANSWER SECTION' | tail -n 1 | awk '{print " is a " $4 " record and points to "$5}'
+	done
+elif [ $# -eq 2 ]
+then
+	echo -n "The subdomain $2"
+	dig "$2.$1" | grep -A 1 'ANSWER SECTION' | tail -n 1 | awk '{print " is a " $4 " record and points to "$5}'
+fi
