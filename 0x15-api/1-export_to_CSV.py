@@ -1,25 +1,36 @@
 #!/usr/bin/python3
-"""
-Write a Python script that, using this REST API,
-for a given employee ID, returns information about
-his/her TODO list progress
-export data in the CSV format.
-"""
+""" Exporting information to CSV """
 import csv
 import requests
 import sys
-
-
 if __name__ == '__main__':
-    id_c = sys.argv[1]
-    url_user = "https://jsonplaceholder.typicode.com/users/" + id_c
-    res = requests.get(url_user).json()
-    username = res.get("username")
-    req = requests.get(
-        'https://jsonplaceholder.typicode.com/users/' +
-        (id_c) + '/todos')
-    with open("{}.csv".format(sys.argv[1]), "w") as file_c:
-        writer = csv.writer(file_c, quoting=csv.QUOTE_ALL)
-        for task in req.json():
-            writer.writerow([id_c, username,
-                            task.get("completed"), task.get("title")])
+    if len(sys.argv) == 2 and sys.argv[1].isdigit():
+        res1 = requests.get('https://jsonplaceholder.typicode.com/todos')
+        res2 = requests.get('https://jsonplaceholder.typicode.com/users')
+        search1 = res1.json()
+        search2 = res2.json()
+        for y in search2:
+            if y['id'] == int(sys.argv[1]):
+                name = y['name']
+                username = y['username']
+        count = 0
+        completed = 0
+        titles = []
+        for i in search1:
+            for key, value in i.items():
+                if key == 'userId' and value == int(sys.argv[1]):
+                    count += 1
+                    for key, value in i.items():
+                        if key == 'completed' and value is True:
+                            completed += 1
+                            titles.append(i['title'])
+        with open('{}.csv'.format(int(sys.argv[1])), 'w+') as f:
+            writer = csv.writer(f, delimiter=',',
+                                quotechar='"',
+                                quoting=csv.QUOTE_ALL)
+            for i in search1:
+                for key, value in i.items():
+                    if key == 'userId' and value == int(sys.argv[1]):
+                        writer.writerow([int(sys.argv[1]),
+                                         username, i['completed'],
+                                         i['title']])
