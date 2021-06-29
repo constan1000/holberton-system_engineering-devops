@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
-# Run 'whoami' as the user passed as an argument
-
-if (( $# ))
-then
-  sudo -u "$1" 'whoami'
-else
-  printf 'Usage: %s USER\n' "${0##*/}" >&2
-  exit 1
-fi
+# Requirements:
+# write a Bash script that accepts one argument
+# the script should run the whoami command under the user passed as an argument
+# make sure to try your script by passing different users
+sudo -u "$1" whoami
