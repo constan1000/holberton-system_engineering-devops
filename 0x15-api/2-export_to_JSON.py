@@ -1,42 +1,26 @@
 #!/usr/bin/python3
-""" Exporting to JSON """
-import json
-import requests
-import sys
+"""
+Summarize an employee's TODO list and write it to a file as JSON
+"""
+from argparse import ArgumentParser
+from json import dump
+from os import path
+from requests import get
+from sys import argv
 
+USERS = 'https://jsonplaceholder.typicode.com/users'
+TODOS = 'https://jsonplaceholder.typicode.com/todos'
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1].isdigit():
-        respond1 = requests.get('https://jsonplaceholder.typicode.com/todos')
-        respond2 = requests.get('https://jsonplaceholder.typicode.com/users')
-        search1 = respond1.json()
-        search2 = respond2.json()
-        for y in search2:
-            if y['id'] == int(sys.argv[1]):
-                user = y['name']
-                usern = y['username']
-        Max = 0
-        Done = 0
-        titles = []
-        for i in search1:
-            for key, value in i.items():
-                if key == 'userId' and value == int(sys.argv[1]):
-                    Max += 1
-                    for key, value in i.items():
-                        if key == 'completed' and value is True:
-                            Done += 1
-                            titles.append(i['title'])
-        c = 0
-        with open('{}.json'.format(int(sys.argv[1])), 'w+') as f:
-            f.write('{')
-            f.write('"{}": ['.format(int(sys.argv[1])))
-            for i in search1:
-                for key, value in i.items():
-                    if key == 'userId' and value == int(sys.argv[1]):
-                        c += 1
-                        f.write(json.dumps({'task': i['title'],
-                                            'completed': i['completed'],
-                                            'username': usern}))
-                        if c != Max:
-                            f.write(", ")
-            f.write(']}')
+    parser = ArgumentParser(prog=path.basename(argv[0]))
+    parser.add_argument('id', type=int, help='employee ID')
+    args = parser.parse_args()
+    user = get('/'.join([USERS, str(args.id)])).json()
+    with open('.'.join([str(args.id), 'json']), 'w') as ostream:
+        dump({
+            str(args.id): [{
+                "task": task['title'],
+                "completed": task['completed'],
+                "username": user['username'],
+            } for task in get(TODOS, params={'userId': args.id}).json()]
+        }, ostream)

@@ -1,36 +1,22 @@
 #!/usr/bin/python3
-""" Exporting information to CSV """
-import csv
-import requests
-import sys
+"""
+Summarize an employee's TODO list and write it to a file as a CSV
+"""
+from argparse import ArgumentParser
+from csv import QUOTE_ALL, writer
+from os import path
+from requests import get
+from sys import argv
+
+USERS = 'https://jsonplaceholder.typicode.com/users'
+TODOS = 'https://jsonplaceholder.typicode.com/todos'
+
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1].isdigit():
-        res1 = requests.get('https://jsonplaceholder.typicode.com/todos')
-        res2 = requests.get('https://jsonplaceholder.typicode.com/users')
-        search1 = res1.json()
-        search2 = res2.json()
-        for y in search2:
-            if y['id'] == int(sys.argv[1]):
-                name = y['name']
-                username = y['username']
-        count = 0
-        completed = 0
-        titles = []
-        for i in search1:
-            for key, value in i.items():
-                if key == 'userId' and value == int(sys.argv[1]):
-                    count += 1
-                    for key, value in i.items():
-                        if key == 'completed' and value is True:
-                            completed += 1
-                            titles.append(i['title'])
-        with open('{}.csv'.format(int(sys.argv[1])), 'w+') as f:
-            writer = csv.writer(f, delimiter=',',
-                                quotechar='"',
-                                quoting=csv.QUOTE_ALL)
-            for i in search1:
-                for key, value in i.items():
-                    if key == 'userId' and value == int(sys.argv[1]):
-                        writer.writerow([int(sys.argv[1]),
-                                         username, i['completed'],
-                                         i['title']])
+    parser = ArgumentParser(prog=path.basename(argv[0]))
+    parser.add_argument('id', type=int, help='employee ID')
+    args = parser.parse_args()
+    user = get('/'.join([USERS, str(args.id)])).json()
+    with open('.'.join([str(args.id), 'csv']), 'w', newline='') as ostream:
+        writer(ostream, quoting=QUOTE_ALL).writerows(
+            [str(args.id), user['username'], task['completed'], task['title']]
+            for task in get(TODOS, params={'userId': args.id}).json())

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# config ngnix server to listen to port 80 short way
-
+#Bash script with the minimum number of commands to automate your fix.
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
-rm /run/nginx.pid
+service nginx restart
+pkill -o nginx
