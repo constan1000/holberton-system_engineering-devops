@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# Install NGINX on my server
-
-sudo apt-get update
-sudo apt-get -y upgrade
-sudo apt-get -y install nginx
-sudo service nginx start
-echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html
-newlines="rewrite ^/redirect_me/ https://www.youtube.com/watch?v=QH2-TGUlwu4/ permanent;"
-sudo sed -i "/server_name _/a $newlines" /etc/nginx/sites-available/default
+# Installing Nginx on Server and redirect
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install -y nginx
+sudo chown -R "$USER":"$USER" /var/www/
+sudo chown -R "$USER":"$USER" /etc/nginx
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+line="\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=dQw4w9WgXcQ permanent;"
+sudo sed -i "26i $line" /etc/nginx/sites-available/default
 sudo service nginx restart
 sudo service nginx reload
